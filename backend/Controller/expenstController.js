@@ -153,50 +153,50 @@ const generateCSV = async (expenses) => {
 
 
   // Controller to handle CSV export
-//   const exportCsv = async (req, res) => {
-//     try {
-//       const expenses = await Expense.find(); // Fetch data from MongoDB
-  
-//       // Generate CSV and save it in Downloads folder
-//       const filePath = await generateCSV(expenses);
-  
-//       // Send file for download (to the default "Downloads" folder)
-//       res.download(filePath, "expenses.csv", (err) => {
-//         if (err) {
-//           console.error("Error sending file:", err);
-//           res.status(500).json({ error: "Error exporting CSV" });
-//         }
-//       });
-//     } catch (error) {
-//       console.error("Error exporting CSV:", error);
-//       res.status(500).json({ error: "Error exporting CSV" });
-//     }
-//   };
-  
-
-const exportCsv = async (req, res) => {
+  const exportCsv = async (req, res) => {
     try {
       const expenses = await Expense.find(); // Fetch data from MongoDB
   
       // Generate CSV and save it in Downloads folder
       const filePath = await generateCSV(expenses);
   
-      // Send file for download
+      // Send file for download (to the default "Downloads" folder)
       res.download(filePath, "expenses.csv", (err) => {
         if (err) {
           console.error("Error sending file:", err);
           res.status(500).json({ error: "Error exporting CSV" });
         }
-        // Optionally, delete the file after sending it
-        fs.unlink(filePath, (err) => {
-          if (err) console.error("Error deleting file:", err);
-        });
       });
     } catch (error) {
       console.error("Error exporting CSV:", error);
       res.status(500).json({ error: "Error exporting CSV" });
     }
   };
+  
+
+// const exportCsv = async (req, res) => {
+//     try {
+//       const expenses = await Expense.find(); // Fetch data from MongoDB
+  
+//       // Generate CSV and save it in Downloads folder
+//       const filePath = await generateCSV(expenses);
+  
+//       // Send file for download
+//       res.download(filePath, "expenses.csv", (err) => {
+//         if (err) {
+//           console.error("Error sending file:", err);
+//           res.status(500).json({ error: "Error exporting CSV" });
+//         }
+//         // Optionally, delete the file after sending it
+//         fs.unlink(filePath, (err) => {
+//           if (err) console.error("Error deleting file:", err);
+//         });
+//       });
+//     } catch (error) {
+//       console.error("Error exporting CSV:", error);
+//       res.status(500).json({ error: "Error exporting CSV" });
+//     }
+//   };
 
   
 module.exports = {addExpense, getExpenses, deleteExpense, exportCsv}
